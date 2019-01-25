@@ -40,7 +40,9 @@ class CreditsUtils {
     }
 
     deploySmartContract(smartContractCode) {
-        smartContractCode = "public class Contract extends SmartContract { public Contract() {} public String getString() { return \"Hello!!!\"; }}";
+        if(smartContractCode == '')
+            smartContractCode = "public class Contract extends SmartContract { public Contract() {} public String getString() { return \"Hello!!!\"; }}";
+            
         let Trans = ConstructTransaction(this.client(), {
             amount: "0,0",
             currency: 1,

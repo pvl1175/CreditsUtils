@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/3.3.3/adapter.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js"></script>
+    <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+
+    <script src="thrift.js"></script>
+    <script src="API_3_0.js"></script>
+    <script src="api_types_3_0.js"></script>
+    <script src="general_types_3_0.js"></script>
+    <script src="Signature_3_0.js"></script>
+    <script src="nacl.js"></script>
+    <script src="Util.js"></script>
+
+    <title>CREDITS API JS Demo</title>
+    <script>
+
+        function csSamples() {
+            var publicKey = "H5ptdUUfjJBGiK2X3gN2EzNYxituCUUnXv2tiMdQKP3b";
+            var privateKey = "3Ki86Y3dy8enEgM1LXL97oQ6zLnhVbjJPpWAdqhgkAh7uFab37ergRWJxyDDsa46ra3UiQXqe2rW7JrJPkekBWMs";
+
+            var smartContractAddress = "36eHSndcfHeUH33P3Rq85V3aNUPAjXuMonimA6kQZ9QS"; //"36eHSndcfHeUH33P3Rq85V3aNUPAjXuMonimA6kQZ9QS";
+            var smartContractMethod = "getString";
+
+            var cu = new CreditsUtils(publicKey, privateKey, "http://169.50.169.11:8081/thrift/service/Api");
+            var balance = cu.walletGetBalance();
+            document.getElementById('pc-id').innerText = publicKey;
+            document.getElementById('bl-id').innerText = 'Integral: ' + balance.integral + ', Fraction: ' + balance.fraction;
+
+            document.getElementById('sm-id').innerText = "SmartContract Address" + smartContractAddress + "/" + smartContractMethod;
+            cu.executeSmartContractMethod(smartContractAddress, smartContractMethod, function(result) {
+                document.getElementById('res-id').innerText = result;
+            });
+
+            // cu.deploySmartContract("");
+        } 
+
+        function ready() {
+            csSamples();
+        }
+        document.addEventListener("DOMContentLoaded", ready);
+    </script>
+</head>
+<body>
+    <h1 >Public Key</h1>
+    <dl></dl>
+    <h2 id="pc-id">Empty</h2>
+    
+    <h1>Balance</h1>
+    <dl></dl>
+    <h2 id="bl-id">0</h2>
+
+    <h1>SmartContract Method</h1>
+    <dl></dl>
+    <h2 id="sm-id"></h2>
+    <h2>Method: getString</h2>
+    <h2 id="res-id">0</h2>
+</body>
+</html>

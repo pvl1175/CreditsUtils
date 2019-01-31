@@ -44,7 +44,8 @@ class CreditsUtils {
 
     deploySmartContract(smartContractCode) {
         if(smartContractCode == '')
-            smartContractCode = "public class Contract extends SmartContract { " +
+            smartContractCode = "import java.util.ArrayList; " + 
+                "public class Contract extends SmartContract { " +
                 "private final ArrayList<String> list; " +
              
                 "public Contract() { " +
@@ -63,7 +64,7 @@ class CreditsUtils {
             
                 "public int count(){ " +
                 "    return list.size(); " +
-                "}" +
+                "} " +
             "}";
         
         var client = this.client();

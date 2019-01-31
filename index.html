@@ -24,20 +24,20 @@
             var publicKey = "H5ptdUUfjJBGiK2X3gN2EzNYxituCUUnXv2tiMdQKP3b";
             var privateKey = "3Ki86Y3dy8enEgM1LXL97oQ6zLnhVbjJPpWAdqhgkAh7uFab37ergRWJxyDDsa46ra3UiQXqe2rW7JrJPkekBWMs";
 
-            var smartContractAddress = "36eHSndcfHeUH33P3Rq85V3aNUPAjXuMonimA6kQZ9QS"; //"36eHSndcfHeUH33P3Rq85V3aNUPAjXuMonimA6kQZ9QS";
-            var smartContractMethod = "getString";
+            var smartContractAddress = "AJqdQ1a13zirEHLNkAeihrQXh18Hd6CjZTjxi6u8eFaN"; //"36eHSndcfHeUH33P3Rq85V3aNUPAjXuMonimA6kQZ9QS";
+            var smartContractMethod = "count";
 
             var cu = new CreditsUtils(publicKey, privateKey, "http://169.50.169.11:8081/thrift/service/Api");
-            // var balance = cu.walletGetBalance();
-            // document.getElementById('pc-id').innerText = publicKey;
-            // document.getElementById('bl-id').innerText = 'Integral: ' + balance.integral + ', Fraction: ' + balance.fraction;
+            var balance = cu.walletGetBalance();
+            document.getElementById('pc-id').innerText = publicKey;
+            document.getElementById('bl-id').innerText = 'Integral: ' + balance.integral + ', Fraction: ' + balance.fraction;
 
-            // document.getElementById('sm-id').innerText = smartContractAddress;
-            // cu.executeSmartContractMethod(smartContractAddress, smartContractMethod, function(result) {
-            //     document.getElementById('res-id').innerText = result;
-            // });
+            document.getElementById('sm-id').innerText = smartContractAddress;
+            cu.executeSmartContractMethod(smartContractAddress, smartContractMethod, function(result) {
+                document.getElementById('res-id').innerText = result;
+            });
 
-            cu.deploySmartContract("");
+            //cu.deploySmartContract("");
         } 
 
         function ready() {

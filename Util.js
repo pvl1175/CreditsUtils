@@ -21,7 +21,8 @@ class CreditsUtils {
     }
  
     executeSmartContractMethod(smartContract, method, result) {
-        var trans = ConstructTransaction(this.client(), {
+        var client = this.client();
+        var trans = ConstructTransaction(client, {
             amount: 0.0,
             fee: 1.0,
             source: this.publicKeyByte,
@@ -34,16 +35,40 @@ class CreditsUtils {
             }
         });
         
-        this.client().TransactionFlow(trans, function (GetSRes) {
+        client.TransactionFlow(trans, function (GetSRes) {
+            console.log(GetSRes.smart_contract_result);
             result(GetSRes.smart_contract_result.v_string);
+            //result('OK');
         });
     }
 
     deploySmartContract(smartContractCode) {
         if(smartContractCode == '')
-            smartContractCode = "public class Contract extends SmartContract { public Contract() {} public String getString() { return \"Hello!!!\"; }}";
+            smartContractCode = "public class Contract extends SmartContract { " +
+                "private final ArrayList<String> list; " +
+             
+                "public Contract() { " +
+                "    list = new ArrayList<>(); " +
+                "} " +
             
-        let Trans = ConstructTransaction(this.client(), {
+                "public String hello() { " +
+                "    return \"hello\"; " +
+                "} " +
+            
+                "public void addRange(){ " +
+                "    for(int i = 0; i < 10000; i++) { " +
+                "        list.add(i + \"00000\"); " +
+                "    } " +
+                "} " +
+            
+                "public int count(){ " +
+                "    return list.size(); " +
+                "}" +
+            "}";
+        
+        var client = this.client();
+        
+        let Trans = ConstructTransaction(client, {
             amount: "0,0",
             currency: 1,
             fee: "1.0",
@@ -64,7 +89,7 @@ class CreditsUtils {
     
         var publicKey = Base58.encode(Trans.target);
         console.log(publicKey);
-        this.client().TransactionFlow(Trans, function (r) {
+        client.TransactionFlow(Trans, function (r) {
             console.log(r);
         });
     }

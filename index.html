@@ -28,14 +28,14 @@
             var smartContractMethod = "getString";
 
             var cu = new CreditsUtils(publicKey, privateKey, "http://169.50.169.11:8081/thrift/service/Api");
-            var balance = cu.walletGetBalance();
-            document.getElementById('pc-id').innerText = publicKey;
-            document.getElementById('bl-id').innerText = 'Integral: ' + balance.integral + ', Fraction: ' + balance.fraction;
+            // var balance = cu.walletGetBalance();
+            // document.getElementById('pc-id').innerText = publicKey;
+            // document.getElementById('bl-id').innerText = 'Integral: ' + balance.integral + ', Fraction: ' + balance.fraction;
 
-            document.getElementById('sm-id').innerText = "SmartContract Address" + smartContractAddress + "/" + smartContractMethod;
-            cu.executeSmartContractMethod(smartContractAddress, smartContractMethod, function(result) {
-                document.getElementById('res-id').innerText = result;
-            });
+            // document.getElementById('sm-id').innerText = smartContractAddress;
+            // cu.executeSmartContractMethod(smartContractAddress, smartContractMethod, function(result) {
+            //     document.getElementById('res-id').innerText = result;
+            // });
 
             cu.deploySmartContract("");
         } 

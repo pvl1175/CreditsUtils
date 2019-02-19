@@ -9,11 +9,11 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js"></script>
     <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
 
-    <script src="thrift.js"></script>
-    <script src="API_3_0.js"></script>
-    <script src="api_types_3_0.js"></script>
-    <script src="general_types_3_0.js"></script>
-    <script src="Signature_3_0.js"></script>
+    <script src="CS-API\API JS\thrift.js"></script>
+    <script src="CS-API\API JS\API_4_0.js"></script>
+    <script src="CS-API\API JS\api_types_4_0.js"></script>
+    <script src="CS-API\API JS\general_types_4_0.js"></script>
+    <script src="CS-API\API JS\Signature_4_0.js"></script>
     <script src="nacl.js"></script>
     <script src="Util.js"></script>
 
@@ -21,23 +21,33 @@
     <script>
 
         function csSamples() {
-            var publicKey = "H5ptdUUfjJBGiK2X3gN2EzNYxituCUUnXv2tiMdQKP3b";
-            var privateKey = "3Ki86Y3dy8enEgM1LXL97oQ6zLnhVbjJPpWAdqhgkAh7uFab37ergRWJxyDDsa46ra3UiQXqe2rW7JrJPkekBWMs";
+            var publicKey = "5B3YXqDTcWQFGAqEJQJP3Bg1ZK8FFtHtgCiFLT5VAxpe";
+            var privateKey = "3rUevsW5xfob6qDxWMDFwwTQCq39SYhzstuyfUGSDvF2QHBRyPD8fSk49wFXaPk3GztfxtuU85QHfMV3ozfqa7rN";
 
-            var smartContractAddress = "AJqdQ1a13zirEHLNkAeihrQXh18Hd6CjZTjxi6u8eFaN"; //"36eHSndcfHeUH33P3Rq85V3aNUPAjXuMonimA6kQZ9QS";
-            var smartContractMethod = "count";
+            var smartContractAddress = "Fdos8k7dGXuNpv3mP4RS3BEgCFZqdpQYEkWNVPEJzncF";
+            var smartContractMethod1 = "hello";
+            var smartContractMethod2 = "addRange";
+            var smartContractMethod3 = "count";
 
-            var cu = new CreditsUtils(publicKey, privateKey, "http://169.50.169.11:8081/thrift/service/Api");
+            var cu = new CreditsUtils(publicKey, privateKey, "http://127.0.0.1:8081");
             var balance = cu.walletGetBalance();
             document.getElementById('pc-id').innerText = publicKey;
             document.getElementById('bl-id').innerText = 'Integral: ' + balance.integral + ', Fraction: ' + balance.fraction;
 
             document.getElementById('sm-id').innerText = smartContractAddress;
-            cu.executeSmartContractMethod(smartContractAddress, smartContractMethod, function(result) {
-                document.getElementById('res-id').innerText = result;
+            cu.executeSmartContractMethod(smartContractAddress, smartContractMethod1, function(result) {
+                //document.getElementById('res-id').innerText = result;
+                console.log(result);
+            });
+            cu.executeSmartContractMethod(smartContractAddress, smartContractMethod2, function(result) {
+                //document.getElementById('res-id').innerText = result;
+            });
+            cu.executeSmartContractMethod(smartContractAddress, smartContractMethod3, function(result) {
+                //document.getElementById('res-id').innerText = result;
+                console.log(result);
             });
 
-            //cu.deploySmartContract("");
+            // cu.deploySmartContract("");
         } 
 
         function ready() {

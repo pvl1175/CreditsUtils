@@ -17,12 +17,14 @@ class CreditsUtils {
     }
 
     walletGetBalance() {
-        return this.client().WalletBalanceGet(this.publicKeyByte).balance;
+        var balance = this.client().WalletBalanceGet(this.publicKeyByte).balance;
+        console.log(balance);
+        return balance;
     }
  
     executeSmartContractMethod(smartContract, method, result) {
         var client = this.client();
-        var trans = ConstructTransaction(client, {
+        var trans = window.SignCS.ConstructTransaction(client, {
             amount: 0.0,
             fee: 1.0,
             source: this.publicKeyByte,
@@ -37,8 +39,7 @@ class CreditsUtils {
         
         client.TransactionFlow(trans, function (GetSRes) {
             console.log(GetSRes.smart_contract_result);
-            result(GetSRes.smart_contract_result.v_string);
-            //result('OK');
+            result(GetSRes.smart_contract_result);
         });
     }
 
@@ -48,7 +49,8 @@ class CreditsUtils {
                 "public class Contract extends SmartContract { " +
                 "private final ArrayList<String> list; " +
              
-                "public Contract() { " +
+                "public Contract(String initiator) { " +
+                "    super(initiator);" +
                 "    list = new ArrayList<>(); " +
                 "} " +
             
@@ -69,7 +71,7 @@ class CreditsUtils {
         
         var client = this.client();
         
-        let Trans = ConstructTransaction(client, {
+        let Trans = window.SignCS.ConstructTransaction(client, {
             amount: "0,0",
             currency: 1,
             fee: "1.0",
